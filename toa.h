@@ -20,7 +20,7 @@
 #include <net/ipv6.h>
 #include <net/transp_v6.h>
 
-#define TOA_VERSION "1.0.0.0"
+#define TOA_VERSION "2.0.0.0"
 
 #define TOA_DBG(msg...)			\
     do {						\
