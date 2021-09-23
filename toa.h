@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 #ifndef __NET__TOA_H__
 #define __NET__TOA_H__
 
@@ -22,18 +23,18 @@
 
 #define TOA_VERSION "2.0.0.0"
 
-#define TOA_DBG(msg...)			\
-    do {						\
-          printk(KERN_DEBUG "[DEBUG] TOA: " msg);       \
-    } while (0)
+#define TOA_DBG(msg...)	printk(KERN_DEBUG "[DEBUG] TOA: " msg)
 
 #define TOA_INFO(msg...)			\
-     do { \
-          if(net_ratelimit()) \
-               printk(KERN_INFO "TOA: " msg);\
-     } while(0)
+do { \
+	if (net_ratelimit()) \
+		printk(KERN_INFO "TOA: " msg);    \
+} while (0)
 
-#define TCPOPT_TOA  200
+/* UCloud mode */
+  #define TCPOPT_TOA_UCLOUD  200
+  /* compatible mode */
+  #define TCPOPT_TOA_COMPAT  254
 
 /* MUST be 4n !!!! */
 #define TCPOLEN_TOA 8		/* |opcode|size|ip+port| = 1 + 1 + 6 */
@@ -63,13 +64,13 @@ struct toa_stats_entry {
 };
 
 #define TOA_STAT_ITEM(_name, _entry) { \
-        .name = _name,            \
-        .entry = _entry,          \
+	.name = _name,            \
+	.entry = _entry,          \
 }
 
 #define TOA_STAT_END {    \
-        NULL,           \
-        0,              \
+	NULL,           \
+	0,              \
 }
 
 struct toa_stat_mib {
@@ -77,9 +78,9 @@ struct toa_stat_mib {
 };
 
 #define DEFINE_TOA_STAT(type, name)       \
-        __typeof__(type) *name
+	__typeof__(type) *name
 #define TOA_INC_STATS(mib, field)         \
-        (per_cpu_ptr(mib, smp_processor_id())->mibs[field]++)
+	(per_cpu_ptr(mib, smp_processor_id())->mibs[field]++)
 
 
 #endif
