@@ -143,7 +143,7 @@ static void *get_toa_data(struct sk_buff *skb)
 					return NULL;
 				if (opsize > length)
 					return NULL;	/* don't parse partial options */
-				if ((opcode == TCPOPT_TOA_UCLOUD || opcode == TCPOPT_TOA_COMPAT) &&
+				if ((opcode == TCPOPT_TOA_UCLOUD || opcode == TCPOPT_TOA_COMPAT || opcode == TCPOPT_TOA_AKAMAI) &&
 					opsize == TCPOLEN_TOA) {
 					memcpy(&tdata, ptr - 2, sizeof(tdata));
 					//TOA_DBG("find toa data: ip = %u.%u.%u.%u, port = %u\n", NIPQUAD(tdata.ip),
@@ -197,7 +197,7 @@ inet_getname_toa(struct socket *sock, struct sockaddr *uaddr, int peer)
 #endif
 		if (sk_data_ready_fn == sk->sk_data_ready) {
 			memcpy(&tdata, &sk->sk_user_data, sizeof(tdata));
-			if ((tdata.opcode == TCPOPT_TOA_UCLOUD || tdata.opcode == TCPOPT_TOA_COMPAT) &&
+			if ((tdata.opcode == TCPOPT_TOA_UCLOUD || tdata.opcode == TCPOPT_TOA_COMPAT || tdata.opcode == TCPOPT_TOA_AKAMAI) &&
 				tdata.opsize == TCPOLEN_TOA) {
 				TOA_INC_STATS(ext_stats, GETNAME_TOA_OK_CNT);
 				//TOA_DBG("inet_getname_toa: set new sockaddr, ip %pI4 -> %pI4, port %u -> %u\n",
@@ -251,7 +251,7 @@ inet6_getname_toa(struct socket *sock, struct sockaddr *uaddr, int peer)
 #endif
 		if (sk_data_ready_fn == sk->sk_data_ready) {
 			memcpy(&tdata, &sk->sk_user_data, sizeof(tdata));
-			if ((tdata.opcode == TCPOPT_TOA_UCLOUD || tdata.opcode == TCPOPT_TOA_COMPAT) &&
+			if ((tdata.opcode == TCPOPT_TOA_UCLOUD || tdata.opcode == TCPOPT_TOA_COMPAT || tdata.opcode == TCPOPT_TOA_AKAMAI) &&
 				tdata.opsize == TCPOLEN_TOA) {
 				TOA_INC_STATS(ext_stats, GETNAME_TOA_OK_CNT);
 				sin->sin6_port = tdata.port;
