@@ -35,6 +35,7 @@ do { \
   #define TCPOPT_TOA_UCLOUD  200
   /* compatible mode */
   #define TCPOPT_TOA_COMPAT  254
+  #define TCPOPT_TOA_AKAMAI  253
 
 /* MUST be 4n !!!! */
 #define TCPOLEN_TOA 8		/* |opcode|size|ip+port| = 1 + 1 + 6 */
